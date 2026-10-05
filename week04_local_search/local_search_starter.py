@@ -167,6 +167,33 @@ def hill_climbing(problem, start_board):
 
     # TODO
 
+    current_cost = count_conflicts(current)
+
+    while True:
+
+        neighbours = generate_neighbours(problem,current)
+
+        best_neighbour = neighbours[0]
+
+        best_cost = count_conflicts(best_neighbour)
+
+        for neighbour in neighbours:
+            cost = count_conflicts(neighbour)
+
+            if cost < best_cost:
+
+                best_neighbour = neighbour
+
+                best_cost = cost
+
+        if best_cost >= current_cost:
+            return current
+
+        current = best_neighbour
+
+        current_cost = best_cost
+
+
     pass
 
 
@@ -239,3 +266,25 @@ if __name__ == "__main__":
     print(
         f"{len(neighbours)} neighbours generated"
     )
+
+
+    print("\nHill Climbing")
+
+    final_board = hill_climbing(problem, board)
+
+    print("Start board:", board)
+    print("Start conflicts:", count_conflicts(board))
+    print("Final board:", final_board)
+    print("Final conflicts:", count_conflicts(final_board))
+
+    print("\nTask 4 - Hill Climbing Experiment")
+
+    for attempt in range(1, 6):
+
+        start = [random.randint(0, N - 1) for _ in range(N)]
+
+        problem = QueensProblem(start)
+
+        result = hill_climbing(problem, start)
+
+        print("Attempt", attempt, "-> Final cost =", count_conflicts(result))
