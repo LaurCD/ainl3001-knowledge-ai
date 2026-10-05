@@ -57,7 +57,6 @@ print(
     "\nQuestion: How many conflicts exist on this board?"
 )
 
-
 # --------------------------------------------------
 # TASK 1 — EVALUATE A STATE
 # --------------------------------------------------
@@ -82,6 +81,22 @@ def count_conflicts(board):
     #
     #   1. in the same row
     #   2. on the same diagonal
+
+    conflicts = 0
+
+    n =len(board)
+
+    for i in range(n):
+
+        for j in range (i + 1, n):
+
+            same_row = board[i] == board [j]
+
+            same_diagonal = abs(board[i] - board [j]) == abs(i - j)
+
+            if same_row or same_diagonal:
+                conflicts = conflicts + 1
+    return conflicts
 
     pass
 
@@ -191,6 +206,11 @@ if __name__ == "__main__":
     print("\nConflicts")
     print(
         count_conflicts(board)
+    )
+
+    print("\nTask 0 Board Conflicts")
+    print(
+        count_conflicts([0, 1, 2, 3])
     )
 
     print("\nPossible Actions")
