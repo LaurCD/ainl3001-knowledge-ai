@@ -219,6 +219,42 @@ def simulated_annealing(problem, start_board):
 
     # TODO
 
+    current_cost = count_conflicts(current)
+
+    while temperature > 0.01:
+
+        for step in range(100):
+
+            if current_cost == 0:
+                return current
+
+            neighbours = generate_neighbours(problem,current)
+
+            neighbour = random.choice(neighbours)
+
+            neighbour_cost = count_conflicts(neighbour)
+
+            change = neighbour_cost - current_cost
+
+            if change < 0:
+
+                current = neighbour
+
+                current_cost = neighbour_cost
+
+            else:
+                probability = math.exp( -change/temperature)
+
+                if random.random() < probability:
+
+                    current = neighbour
+
+                    current_cost = neighbour_cost
+
+        temperature = temperature * cooling_rate
+
+    return current
+
     pass
 
 
@@ -288,3 +324,38 @@ if __name__ == "__main__":
         result = hill_climbing(problem, start)
 
         print("Attempt", attempt, "-> Final cost =", count_conflicts(result))
+
+
+    print("\nSimulated Annealing")
+
+    problem = QueensProblem(board)
+
+    sa_board = simulated_annealing(problem, board)
+
+    print("Start board:", board)
+    print("Start conflicts:", count_conflicts(board))
+    print("Final board:", sa_board)
+    print("Final conflicts:", count_conflicts(sa_board))
+
+    print("\nTask 5.1 - Compare the Algorithms")
+
+    hc_results = []
+    sa_results = []
+
+    for attempt in range(1, 6):
+
+        start = [random.randint(0, N - 1) for _ in range(N)]
+
+        problem = QueensProblem(start)
+
+        hc_cost = count_conflicts(hill_climbing(problem, start))
+        sa_cost = count_conflicts(simulated_annealing(problem, start))
+
+        hc_results.append(hc_cost)
+        sa_results.append(sa_cost)
+
+        print("Attempt", attempt, "-> Hill Climbing =", hc_cost, "| Simulated Annealing =", sa_cost)
+
+    print("\nBest cost found")
+    print("Hill Climbing:", min(hc_results))
+    print("Simulated Annealing:", min(sa_results))
