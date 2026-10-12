@@ -93,32 +93,38 @@ def is_valid_assignment(assignment):
 # --------------------------------------------------
 
 def select_unassigned_variable(assignment):
-    """Choose the next unassigned region.
+    """Choose the next unassigned region using MRV.
 
-    Task 3: First return the FIRST unassigned region.
-
-    Task 5: Replace that approach with MRV (Minimum Remaining Values):
-    choose the unassigned region with the FEWEST currently legal
+    Choose the unassigned region with the FEWEST currently legal
     colours. Break ties by keeping the first region in variables.
     """
-    # TASK 3 TODO:
-    # Return the first variable not in assignment, or None if all
-    # variables have been assigned.
+
+    best_variable = None
+
+    fewest_legal = None
 
     for variable in variables:
 
         if variable not in assignment:
-            return variable
 
+            legal_count = 0
 
-    return None
+            for colour in domains[variable]:
 
-    #
-    # TASK 5 TODO (after backtracking works):
-    # For each unassigned variable, temporarily try each colour,
-    # check is_valid_assignment(), and undo the temporary assignment.
-    # Count legal colours and choose the variable with the fewest.
-    pass
+                assignment[variable] = colour
+
+                if is_valid_assignment(assignment):
+                    legal_count = legal_count + 1
+
+                del assignment[variable]
+
+            if fewest_legal is None or legal_count < fewest_legal:
+
+                best_variable = variable
+
+                fewest_legal = legal_count
+
+    return best_variable
 
 
 # --------------------------------------------------
