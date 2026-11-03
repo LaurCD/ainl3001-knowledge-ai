@@ -30,6 +30,27 @@ def forward_chaining(known_facts, rules):
     4. Return the completed set.
     """
     # TODO
+
+    inferred_facts = set(known_facts)
+
+    new_fact_added = True
+
+    while new_fact_added:
+
+        new_fact_added = False
+
+        for conditions, conclusion in rules:
+
+            if all(condition in inferred_facts for condition in conditions):
+
+                if conclusion not in inferred_facts:
+
+                    inferred_facts.add(conclusion)
+
+                    new_fact_added = True
+
+    return inferred_facts
+
     pass
 
 
@@ -39,6 +60,9 @@ def query(inferred_facts, statement):
     A False result means 'not established', not necessarily 'false'.
     """
     # TODO
+    
+    return statement in inferred_facts
+
     pass
 
 
