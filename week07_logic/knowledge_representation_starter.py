@@ -76,6 +76,9 @@ if __name__ == "__main__":
         print(f"  IF {' AND '.join(conditions)} THEN {conclusion}")
     print("\nBefore coding, predict whether these can be inferred:")
     print("  take_umbrella?  stay_dry?  wear_coat?  Why?")
+    print("\nAnswer: take_umbrella can be inferred because rainy must be true for take_umbrella, and rainy is a fact")
+    print("\nAsnwer: stay_dry can be inferred because it uses take_umbrella which is a known fact based on if rainy THEN take umbrella")
+    print("\nAnswer: wear_coat cant be inferred because while rainy is a known fact, it also needs cold, and cold is not a known fact so its false due to there not being enough information about cold")
 
     print("\n" + "=" * 55)
     print("TASKS 3–4 — FORWARD CHAINING AND QUERIES")
@@ -91,6 +94,11 @@ if __name__ == "__main__":
 
     print("\nTASK 5 — BACKWARD CHAINING (discussion)")
     print("Goal: stay_dry. Which rule concludes it? What must be true first?")
+    print("\nAnswer: the rule IF take_umbrella THEN stay_dry concludes it. so take_umbrealla must be true first, and then take_umbrella comes from the known fact rainy, so stay_dry is proved")
+    
     print("\nTASK 6 — LOGIC DISCUSSION")
     print("Is 'IF rainy THEN take_umbrella' always true in the real world?")
+    print("\nAnswer: IF rainy then take umbrella is not always true in the real world because the real world has exceptions, not everyone has an umbrella or chooses to take on, in the program it is simply a rule based on the knowledge base")
+
     print("What assumptions does the rule make?")
+    print("\nAnswer: the assumption this rule makes is that everyone must take an umbrealla if it rains")
